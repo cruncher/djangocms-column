@@ -1,9 +1,10 @@
 from django.conf import settings
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from cms.models import CMSPlugin
-from cms.utils.compat.dj import python_2_unicode_compatible
+
 
 if hasattr(settings, "COLUMN_WIDTH_CHOICES"):
     WIDTH_CHOICES = settings.COLUMN_WIDTH_CHOICES
@@ -24,6 +25,7 @@ class MultiColumns(CMSPlugin):
     """
     A plugin that has sub Column classes
     """
+
     cmsplugin_ptr = models.OneToOneField(
         CMSPlugin,
         related_name='%(app_label)s_%(class)s',
@@ -41,11 +43,9 @@ class Column(CMSPlugin):
     """
     A Column for the MultiColumns Plugin
     """
+
     width = models.CharField(
-        _("width"),
-        choices=WIDTH_CHOICES,
-        default=WIDTH_CHOICES[0][0],
-        max_length=50
+        _("width"), choices=WIDTH_CHOICES, default=WIDTH_CHOICES[0][0], max_length=50
     )
     cmsplugin_ptr = models.OneToOneField(
         CMSPlugin,
